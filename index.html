@@ -12,7 +12,7 @@
         <div class="nav-buttons">
             <span class="menu-button">Menu</span>
             <span class="login-button" id="login-button">Log In</span>
-            <span class="signout-button" id="signout-button" hidden>Sign Out</span>
+            <span class="signout-button" id="signout-button" hidden>Log Out</span>
             <span class="profile-button" id="profile-button" hidden>Profile</span>
         </div>
     </div>
@@ -162,20 +162,59 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
     $(() => {
+        localStorage.removeItem("Username");
+        localStorage.setItem("logState", false);
+
         let isLoggedId = false;
 
         if (isLoggedId === false) {
             $('.login-button').show();
         }
 
+        $('.more-details-button').on('click', (event) => {
+           $(event.currentTarget).closest('.product-details').next().toggle();
+        });
+
+        $('.shoe-details li').on('click', (event) => {
+           $(event.currentTarget).addClass('active');
+           $(event.currentTarget).siblings().removeClass('active');
+           $(event.currentTarget).closest('.shoe-details').children().removeClass('disabled');
+        });
+
         $('.login-button').on('click', () => {
             $('.login-form').toggle();
+
+            $('.login-button').toggleClass('button-active');
+        });
+
+        $('.more-details-button').on('click', (event) => {
+            $().show();
+        });
+
+        $('.login-button').on('mouseenter', () => {
+            $('.login-button').css({
+               color: '#C3FF00',
+               backgroundColor: '#535353'
+            });
+        }).on('mouseleave', () => {
+            $('.login-button').css({
+               color: '#EFEFEF',
+               backgroundColor: '#303030'
+            });
         });
 
         $('.menu-button').on('mouseenter', () => {
            $('.nav-menu').show();
+           $('.menu-button').css({
+               color: '#C3FF00',
+               backgroundColor: '#535353'
+           });
         }).on('mouseleave', () => {
            $('.nav-menu').hide();
+           $('.menu-button').css({
+              color: '#EFEFEF',
+              backgroundColor: '#303030'
+           });
         });
 
         $('.sign-in-button').on('click', (e, event) => {
@@ -185,24 +224,33 @@
                method: 'GET',
                 dataType: 'json',
                 url: `http://localhost:3000/people?username=${document.getElementById('username').value}&password=${document.getElementById('password').value}`,
-                success: (result, global) => {
+                success: (result) => {
                     alert(`Connected as ${result[0].username}!`);
                     document.getElementById('login-button').innerText = result[0].username;
-                    $('.signout-button').show();
-                    isLoggedId = true;
-                    global.localStorage.setItem("Username", document.getElementById('username').value);
                     $('.login-button').hide();
+                    isLoggedId = true;
+                    $('.signout-button').show();
                     $('.profile-button').show();
+                    localStorage.setItem("Username", JSON.stringify(document.getElementById('username').value));
+                    localStorage.setItem("logState", JSON.stringify(isLoggedId));
                 },
                 error: () => {
                    alert('Invalid username/password!');
                 }
             });
 
+            $('.signout-button').on('click', (e) => {
+               localStorage.removeItem("Username");
+               $('.login-button').show();
+               $('.signout-button').hide();
+               $('.profile-button').hide();
+               document.getElementById('login-button').innerText = 'Log In';
+            });
+
             $('.profile-button').on('click', (e) => {
                e.preventDefault();
 
-               window.location.href = `http://localhost:8080/profile?username=${Username}`;
+               window.location.href = 'http://localhost:8080/profile';
             });
         })
     })

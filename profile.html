@@ -2,14 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sole Shoes - Profile</title>
 </head>
 <body>
-<h1>This is a test</h1>
-<button class="test-button">Test Button</button>
-<script>
 
-</script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        $(() => {
+            var username = $.parseJSON(localStorage.getItem("Username"));
+
+            var logState = $.parseJSON(localStorage.getItem("logState"));
+
+            console.log(logState);
+
+            $('.test-button').on('click', () => {
+                document.getElementById('test').innerText = username;
+            });
+
+            if (logState === false || null) {
+                window.location.href = 'http://localhost:8080/';
+            }
+        })
+    </script>
 </body>
 </html>
