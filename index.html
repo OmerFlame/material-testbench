@@ -164,7 +164,10 @@
     $(() => {
         localStorage.removeItem("Username");
         localStorage.setItem("logState", false);
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
         let isLoggedId = false;
 
         if (isLoggedId === false) {
@@ -227,6 +230,13 @@
                 success: (result) => {
                     alert(`Connected as ${result[0].username}!`);
                     document.getElementById('login-button').innerText = result[0].username;
+<<<<<<< HEAD
+=======
+                    $('.signout-button').show();
+                    isLoggedId = true;
+                    localStorage.setItem("Username", JSON.stringify(result[0].username));
+                    localStorage.setItem("logState", true);
+>>>>>>> master
                     $('.login-button').hide();
                     isLoggedId = true;
                     $('.signout-button').show();
@@ -250,7 +260,11 @@
             $('.profile-button').on('click', (e) => {
                e.preventDefault();
 
+<<<<<<< HEAD
                window.location.href = 'http://localhost:8080/profile';
+=======
+               window.location.href = `http://localhost:8080/profile`;
+>>>>>>> master
             });
         })
     })
