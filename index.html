@@ -162,6 +162,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>
     $(() => {
+        localStorage.removeItem("Username");
+        localStorage.setItem("logState", false);
         let isLoggedId = false;
 
         if (isLoggedId === false) {
@@ -185,12 +187,13 @@
                method: 'GET',
                 dataType: 'json',
                 url: `http://localhost:3000/people?username=${document.getElementById('username').value}&password=${document.getElementById('password').value}`,
-                success: (result, global) => {
+                success: (result) => {
                     alert(`Connected as ${result[0].username}!`);
                     document.getElementById('login-button').innerText = result[0].username;
                     $('.signout-button').show();
                     isLoggedId = true;
-                    global.localStorage.setItem("Username", document.getElementById('username').value);
+                    localStorage.setItem("Username", JSON.stringify(result[0].username));
+                    localStorage.setItem("logState", true);
                     $('.login-button').hide();
                     $('.profile-button').show();
                 },
@@ -202,7 +205,7 @@
             $('.profile-button').on('click', (e) => {
                e.preventDefault();
 
-               window.location.href = `http://localhost:8080/profile?username=${Username}`;
+               window.location.href = `http://localhost:8080/profile`;
             });
         })
     })

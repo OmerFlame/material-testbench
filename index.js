@@ -18,7 +18,7 @@ app.get('/profile', (req, res) => {
 
 const msg = {
     to: 'renginald.bagel@gmail.com',
-    from: 'renginald.bagel@gmail.com',
+    from: '2022omar.s@ebin.ort.org.il',
     subject: 'test',
     text: 'test',
     html: '<strong>test</strong>'
