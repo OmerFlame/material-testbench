@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/OmerFlame/material-testbench#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "express": "^4.16.3",
     "html": "^1.0.0"
   }
